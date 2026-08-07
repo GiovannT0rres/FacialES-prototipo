@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manager — Layout Shell + Busca (mockup aprovado)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',system-ui,-apple-system,sans-serif; background:#FAFBFC; color:#111827; min-height:100vh; display:flex; flex-direction:column; }
+
+/* Header */
+header { height:48px; background:#fff; border-bottom:0.5px solid #E5E7EB; display:flex; align-items:center; padding:0 16px; gap:12px; flex-shrink:0; }
+.marca { font-weight:500; font-size:14px; letter-spacing:-0.02em; }
+.spacer { flex:1; }
+.hdr-btn { background:none; border:none; font-size:12.5px; color:#9CA3AF; cursor:pointer; padding:4px 10px; font-family:inherit; }
+.hdr-btn:hover { color:#6B7280; }
+.sino { position:relative; width:32px; height:32px; border:0.5px solid #E5E7EB; border-radius:8px; display:grid; place-items:center; cursor:pointer; }
+.sino:hover { background:#F9FAFB; }
+.sino i { font-size:16px; color:#9CA3AF; }
+.badge { position:absolute; top:-5px; right:-5px; min-width:16px; height:16px; padding:0 4px; border-radius:999px; background:#EF4444; color:#fff; font-size:9.5px; font-weight:600; display:grid; place-items:center; border:2px solid #fff; }
+
+/* Main */
+main { flex:1; display:flex; flex-direction:column; align-items:center; padding:20px; }
+.hero { text-align:center; margin-top:120px; margin-bottom:28px; transition:all 0.3s; }
+.hero h1 { font-size:22px; font-weight:500; letter-spacing:-0.02em; margin-bottom:6px; }
+.hero p { font-size:14px; color:#9CA3AF; }
+.container { width:100%; max-width:540px; }
+
+/* Barra de busca */
+.busca { display:flex; align-items:center; flex-wrap:wrap; gap:6px; background:#fff; border:0.5px solid #E5E7EB; border-radius:28px; padding:6px 6px 6px 14px; min-height:50px; transition:border-color 0.2s; }
+.busca:focus-within { border-color:#93C5FD; box-shadow:0 0 0 3px rgba(59,130,246,0.08); }
+.busca .icon-search { font-size:18px; color:#D1D5DB; flex-shrink:0; }
+.busca:focus-within .icon-search { color:#3B82F6; }
+.tags-inside { display:flex; flex-wrap:wrap; gap:4px; }
+.tag-inside { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:999px; font-size:12px; font-weight:500; background:#EFF6FF; color:#1E40AF; border:0.5px solid #93C5FD; cursor:pointer; white-space:nowrap; }
+.tag-inside:hover { background:#DBEAFE; }
+.busca input { flex:1; min-width:120px; border:none; outline:none; font-size:15px; background:transparent; color:#111827; font-family:inherit; }
+.busca input::placeholder { color:#D1D5DB; }
+.busca-btn { width:38px; height:38px; border-radius:50%; background:#3B82F6; border:none; display:grid; place-items:center; cursor:pointer; flex-shrink:0; }
+.busca-btn:hover { background:#2563EB; }
+.busca-btn i { font-size:16px; color:#fff; }
+
+/* Sugestões */
+.sug-area { margin-top:10px; opacity:0; transform:translateY(-4px); transition:all 0.2s; pointer-events:none; }
+.sug-area.visivel { opacity:1; transform:translateY(0); pointer-events:auto; }
+.sug-label { font-size:11px; font-weight:500; color:#9CA3AF; text-transform:uppercase; letter-spacing:0.05em; padding:0 4px 6px; }
+.filtros-wrap { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+
+/* Chips de filtro */
+.flt { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:999px; font-size:13px; font-weight:500; border:0.5px solid #E5E7EB; background:#fff; cursor:pointer; color:#6B7280; transition:all 0.15s; }
+.flt:hover { border-color:#93C5FD; color:#3B82F6; }
+.flt.ativo { background:#EFF6FF; color:#1E40AF; border-color:#93C5FD; }
+.flt i { font-size:13px; }
+
+/* Chips de pessoa */
+.pessoas-wrap { display:flex; flex-wrap:wrap; gap:6px; }
+.pessoa-chip { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:999px; font-size:13px; font-weight:500; border:0.5px solid #E5E7EB; background:#fff; cursor:pointer; color:#111827; transition:all 0.15s; }
+.pessoa-chip:hover { border-color:#93C5FD; background:#F0F9FF; }
+.pessoa-chip .mini-avatar { width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-size:10px; font-weight:500; }
+
+/* Resultados */
+.resultados { margin-top:16px; opacity:0; transform:translateY(-4px); transition:all 0.2s; pointer-events:none; }
+.resultados.visivel { opacity:1; transform:translateY(0); pointer-events:auto; }
+.res-count { font-size:12.5px; color:#9CA3AF; padding:0 4px 8px; }
+.res-card { display:flex; align-items:center; gap:12px; padding:12px 14px; background:#fff; border:0.5px solid #E5E7EB; border-radius:12px; margin-bottom:6px; cursor:pointer; transition:all 0.15s; }
+.res-card:hover { border-color:#93C5FD; box-shadow:0 2px 8px rgba(59,130,246,0.06); }
+.avatar { width:40px; height:40px; border-radius:50%; display:grid; place-items:center; font-weight:500; font-size:14px; flex-shrink:0; }
+.res-info { flex:1; min-width:0; }
+.res-nome { font-size:14px; font-weight:500; }
+.res-cpf { font-size:12px; color:#9CA3AF; font-variant-numeric:tabular-nums; margin-top:1px; }
+.res-tags { display:flex; gap:6px; flex-shrink:0; }
+.tag-mini { font-size:11px; font-weight:500; padding:2px 8px; border-radius:6px; }
+.seta { font-size:16px; color:#D1D5DB; flex-shrink:0; }
+
+@media (max-width:640px) {
+  .hero h1 { font-size:20px; }
+  .res-tags { display:none; }
+  .hdr-btn.sair { display:none; }
+  header { padding:0 12px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="marca">PACC Manager</span>
+  <div class="spacer"></div>
+  <div class="sino" title="Notificações">
+    <i class="ti ti-bell"></i>
+    <span class="badge">3</span>
+  </div>
+  <button class="hdr-btn">Voltar ao hub</button>
+  <button class="hdr-btn sair">Sair</button>
+</header>
+
+<main>
+  <div class="hero" id="hero">
+    <h1>Quem você procura?</h1>
+    <p>Busque por nome, CPF, placa ou use filtros.</p>
+  </div>
+
+  <div class="container">
+    <div class="busca" id="busca">
+      <i class="ti ti-search icon-search"></i>
+      <div class="tags-inside" id="tagsInside"></div>
+      <input type="text" placeholder="Nome, CPF ou placa..." id="inp" autocomplete="off">
+      <button class="busca-btn"><i class="ti ti-search"></i></button>
+    </div>
+
+    <div class="sug-area" id="sugArea">
+      <div>
+        <p class="sug-label">Filtros</p>
+        <div class="filtros-wrap" id="filtrosWrap">
+          <span class="flt" data-id="socios"><i class="ti ti-user"></i> Sócios</span>
+          <span class="flt" data-id="dependentes"><i class="ti ti-users"></i> Dependentes</span>
+          <span class="flt" data-id="visitantes"><i class="ti ti-clock"></i> Visitantes</span>
+          <span class="flt" data-id="prestadores"><i class="ti ti-briefcase"></i> Prestadores</span>
+          <span class="flt" data-id="noclube"><i class="ti ti-map-pin"></i> No clube agora</span>
+          <span class="flt" data-id="pendencias"><i class="ti ti-alert-triangle"></i> Pendências</span>
+        </div>
+      </div>
+      <div id="pessoasSec" style="display:none">
+        <p class="sug-label">Pessoas</p>
+        <div class="pessoas-wrap" id="pessoasWrap"></div>
+      </div>
+    </div>
+
+    <div class="resultados" id="resArea"></div>
+  </div>
+</main>
+
+<script>
+const DB = [
+  {id:'1',nome:'Carlos Mendes',cpf:'021.345.678-90',tipo:'socios',noclube:true,pendencia:false,label:'Sócio',cor:'#F0FDF4',corT:'#166534'},
+  {id:'2',nome:'Ana Beatriz Souza',cpf:'987.654.321-00',tipo:'visitantes',noclube:false,pendencia:false,label:'Visitante',cor:'#FFFBEB',corT:'#92400E'},
+  {id:'3',nome:'Roberto Lima',cpf:'456.789.012-34',tipo:'prestadores',noclube:false,pendencia:false,label:'Prestador',cor:'#EFF6FF',corT:'#1E40AF'},
+  {id:'4',nome:'Marina Ferreira',cpf:'111.222.333-44',tipo:'visitantes',noclube:false,pendencia:true,label:'Visitante',cor:'#FFFBEB',corT:'#92400E'},
+  {id:'5',nome:'Carlos Eduardo Silva',cpf:'222.333.444-55',tipo:'socios',noclube:true,pendencia:false,label:'Sócio',cor:'#F0FDF4',corT:'#166534'},
+  {id:'6',nome:'Beatriz Oliveira',cpf:'333.444.555-66',tipo:'dependentes',noclube:false,pendencia:false,label:'Dependente',cor:'#F0F9FF',corT:'#0C4A6E'},
+  {id:'7',nome:'João Pedro Santos',cpf:'444.555.666-77',tipo:'prestadores',noclube:true,pendencia:false,label:'Prestador',cor:'#EFF6FF',corT:'#1E40AF'},
+  {id:'8',nome:'Mariana Costa',cpf:'555.666.777-88',tipo:'dependentes',noclube:false,pendencia:false,label:'Dependente',cor:'#F0F9FF',corT:'#0C4A6E'},
+  {id:'9',nome:'Ricardo Almeida',cpf:'666.777.888-99',tipo:'socios',noclube:false,pendencia:false,label:'Sócio',cor:'#F0FDF4',corT:'#166534'},
+  {id:'10',nome:'Fernanda Rocha',cpf:'777.888.999-00',tipo:'visitantes',noclube:false,pendencia:true,label:'Visitante',cor:'#FFFBEB',corT:'#92400E'},
+];
+
+const FILTRO_LABELS = {socios:'Sócios',dependentes:'Dependentes',visitantes:'Visitantes',prestadores:'Prestadores',noclube:'No clube agora',pendencias:'Pendências'};
+
+let filtrosAtivos = new Set();
+let focado = false;
+
+function ini(n){ return n.split(' ').slice(0,2).map(w=>w[0]).join(''); }
+
+function filtrar(){
+  const q = document.getElementById('inp').value.trim().toLowerCase();
+  let r = DB;
+  if(filtrosAtivos.size){
+    r = r.filter(p => {
+      for(const f of filtrosAtivos){
+        if(f === 'noclube' && !p.noclube) return false;
+        if(f === 'pendencias' && !p.pendencia) return false;
+        if(['socios','dependentes','visitantes','prestadores'].includes(f) && p.tipo !== f) return false;
+      }
+      return true;
+    });
+  }
+  if(q) r = r.filter(p => p.nome.toLowerCase().includes(q) || p.cpf.includes(q));
+  return r;
+}
+
+function renderTagsInside(){
+  const el = document.getElementById('tagsInside');
+  el.innerHTML = [...filtrosAtivos].map(f =>
+    `<span class="tag-inside" onclick="event.stopPropagation();toggleFiltro('${f}')">${FILTRO_LABELS[f]} <i class="ti ti-x" style="font-size:11px"></i></span>`
+  ).join('');
+}
+
+function renderPessoas(){
+  const q = document.getElementById('inp').value.trim().toLowerCase();
+  const sec = document.getElementById('pessoasSec');
+  const wrap = document.getElementById('pessoasWrap');
+  if(!q){ sec.style.display='none'; return; }
+  const match = DB.filter(p => p.nome.toLowerCase().includes(q) || p.cpf.includes(q)).slice(0,6);
+  if(!match.length){ sec.style.display='none'; return; }
+  sec.style.display='';
+  wrap.innerHTML = match.map(p =>
+    `<span class="pessoa-chip" onclick="selecionarPessoa('${p.id}')">
+      <span class="mini-avatar" style="background:${p.cor};color:${p.corT}">${ini(p.nome)}</span>
+      ${p.nome}
+    </span>`
+  ).join('');
+}
+
+function renderResultados(){
+  const el = document.getElementById('resArea');
+  const temFiltro = filtrosAtivos.size > 0;
+  const temTexto = document.getElementById('inp').value.trim().length > 0;
+  if(!temFiltro && !temTexto){ el.classList.remove('visivel'); return; }
+  const r = filtrar();
+  el.classList.add('visivel');
+  el.innerHTML = `<p class="res-count">${r.length} pessoa${r.length!==1?'s':''}</p>` +
+    r.map(p => `
+      <div class="res-card">
+        <div class="avatar" style="background:${p.cor};color:${p.corT}">${ini(p.nome)}</div>
+        <div class="res-info">
+          <div class="res-nome">${p.nome}</div>
+          <div class="res-cpf">${p.cpf}</div>
+        </div>
+        <div class="res-tags">
+          <span class="tag-mini" style="background:${p.cor};color:${p.corT}">${p.label}</span>
+          ${p.pendencia ? '<span class="tag-mini" style="background:#FEF3C7;color:#92400E;border:0.5px solid #FDE68A">Pendência</span>' : ''}
+          ${p.noclube ? '<span class="tag-mini" style="background:#F0FDF4;color:#166534;border:0.5px solid #BBF7D0">No clube</span>' : ''}
+        </div>
+        <i class="ti ti-chevron-right seta"></i>
+      </div>
+    `).join('');
+}
+
+function toggleFiltro(id){
+  if(filtrosAtivos.has(id)) filtrosAtivos.delete(id);
+  else filtrosAtivos.add(id);
+  document.querySelectorAll('.flt').forEach(el => {
+    el.classList.toggle('ativo', filtrosAtivos.has(el.dataset.id));
+  });
+  renderTagsInside();
+  renderResultados();
+  updateLayout();
+}
+window.toggleFiltro = toggleFiltro;
+
+function selecionarPessoa(id){
+  const p = DB.find(x=>x.id===id);
+  if(p){ document.getElementById('inp').value = p.nome; renderPessoas(); renderResultados(); }
+}
+window.selecionarPessoa = selecionarPessoa;
+
+function updateLayout(){
+  const ativo = document.getElementById('inp').value.trim() || filtrosAtivos.size > 0 || focado;
+  document.getElementById('hero').style.display = ativo ? 'none' : '';
+  document.getElementById('sugArea').classList.toggle('visivel', !!ativo);
+}
+
+document.querySelectorAll('.flt').forEach(el => {
+  el.addEventListener('click', () => toggleFiltro(el.dataset.id));
+});
+
+const inp = document.getElementById('inp');
+inp.addEventListener('input', () => { renderPessoas(); renderResultados(); updateLayout(); });
+inp.addEventListener('focus', () => { focado=true; updateLayout(); });
+inp.addEventListener('blur', () => { setTimeout(()=>{ focado=false; updateLayout(); },200); });
+</script>
+
+</body>
+</html>

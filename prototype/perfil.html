@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PACC Manager — Perfil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #FAFBFC; color: #111827; -webkit-font-smoothing: antialiased; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* ── Layout ── */
+  .shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* Header */
+  .header { height: 48px; background: #fff; border-bottom: 0.5px solid #E5E7EB; display: flex; align-items: center; padding: 0 20px; gap: 12px; flex-shrink: 0; }
+  .header-brand { font-weight: 500; font-size: 14px; letter-spacing: -0.02em; }
+  .header-spacer { flex: 1; }
+  .bell-btn { position: relative; width: 32px; height: 32px; border: 0.5px solid #E5E7EB; border-radius: 8px; display: grid; place-items: center; background: none; }
+  .bell-btn:hover { background: #F9FAFB; }
+  .bell-badge { position: absolute; top: -5px; right: -5px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px; background: #EF4444; color: #fff; font-size: 9.5px; font-weight: 600; display: grid; place-items: center; border: 2px solid #fff; }
+  .header-link { font-size: 12.5px; color: #6B7280; padding: 4px 10px; background: none; border: none; }
+  .header-link:hover { color: #111827; }
+
+  /* Breadcrumb */
+  .breadcrumb { display: flex; align-items: center; gap: 6px; padding: 10px 20px; border-bottom: 0.5px solid #E5E7EB; background: #fff; }
+  .bc-back { display: flex; align-items: center; gap: 4px; color: #3B82F6; font-size: 13px; font-weight: 500; text-decoration: none; background: none; border: none; }
+  .bc-back:hover { text-decoration: underline; }
+  .bc-sep { font-size: 12px; color: #D1D5DB; }
+  .bc-current { font-size: 14px; font-weight: 500; }
+
+  /* Grid sidebar + main */
+  .content { flex: 1; display: grid; grid-template-columns: 280px 1fr; min-height: 0; }
+
+  /* Sidebar */
+  .sidebar { border-right: 0.5px solid #E5E7EB; background: #fff; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .sid-id { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .sid-avatar { width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center; font-weight: 500; font-size: 28px; margin-bottom: 12px; }
+  .sid-name { font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+  .badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 6px; display: inline-block; }
+  .badge-socio { background: #F0FDF4; color: #166534; }
+  .badge-dep { background: #F0F9FF; color: #0C4A6E; }
+  .badge-vis { background: #FFFBEB; color: #92400E; }
+  .badge-prest { background: #EFF6FF; color: #1E40AF; }
+
+  .sid-section { border-top: 0.5px solid #E5E7EB; padding-top: 14px; }
+  .sid-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .sid-row:last-child { margin-bottom: 0; }
+  .sid-label { font-size: 11px; font-weight: 500; color: #6B7280; text-transform: uppercase; letter-spacing: 0.04em; }
+  .sid-value { font-size: 13px; }
+  .sid-value-num { font-variant-numeric: tabular-nums; }
+
+  .presenca-box { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #F0FDF4; border-radius: 10px; margin-bottom: 10px; }
+  .presenca-dot { width: 8px; height: 8px; border-radius: 50%; background: #059669; }
+  .presenca-title { font-size: 13px; font-weight: 500; color: #166534; }
+  .presenca-sub { font-size: 11px; color: #15803D; }
+  .hist-row { display: flex; justify-content: space-between; font-size: 12px; color: #6B7280; margin-bottom: 4px; }
+
+  .obs-wrap { margin-top: auto; }
+  .obs-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .obs-add { font-size: 11px; color: #3B82F6; background: none; border: none; margin-left: auto; }
+  .obs-body { padding: 8px 10px; background: #FAFBFC; border-radius: 8px; font-size: 12px; color: #6B7280; line-height: 1.5; }
+  .obs-meta { font-size: 10px; color: #6B7280; margin-top: 3px; }
+
+  /* Main area */
+  .main { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+
+  /* Pendência banner */
+  .pendencia { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #FFFBEB; border: 0.5px solid #FDE68A; border-radius: 10px; }
+  .pendencia-text { flex: 1; }
+  .pendencia-title { font-size: 13px; font-weight: 500; color: #92400E; }
+  .pendencia-sub { font-size: 12px; color: #B45309; margin-left: 6px; }
+  .btn-whatsapp { font-size: 12px; font-weight: 500; color: #166534; background: #F0FDF4; border: 0.5px solid #BBF7D0; border-radius: 8px; padding: 5px 14px; display: flex; align-items: center; gap: 5px; }
+  .btn-whatsapp:hover { background: #DCFCE7; }
+
+  /* Metrics */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .metric { border-radius: 10px; padding: 12px 14px; }
+  .metric-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .metric-val { font-size: 22px; font-weight: 500; }
+  .metric-green { background: #F0FDF4; border: 0.5px solid #BBF7D0; }
+  .metric-green .metric-label { color: #166534; }
+  .metric-green .metric-val { color: #059669; }
+  .metric-amber { background: #FFFBEB; border: 0.5px solid #FDE68A; }
+  .metric-amber .metric-label { color: #92400E; }
+  .metric-amber .metric-val { color: #D97706; }
+  .metric-neutral { background: #fff; border: 0.5px solid #E5E7EB; }
+  .metric-neutral .metric-label { color: #6B7280; }
+
+  /* Box generic */
+  .box { background: #fff; border: 0.5px solid #E5E7EB; border-radius: 12px; padding: 1.25rem; }
+  .box-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 0.5px solid #E5E7EB; }
+  .box-title { font-size: 13px; font-weight: 500; color: #6B7280; text-transform: uppercase; letter-spacing: 0.04em; }
+  .box-count { font-size: 12px; color: #6B7280; margin-left: 4px; }
+  .box-badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: #FEF3C7; color: #92400E; font-size: 10px; font-weight: 600; display: grid; place-items: center; }
+
+  /* Vínculos grid */
+  .vinculos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .vinc-card { border: 0.5px solid #E5E7EB; border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.15s; }
+  .vinc-card:hover { border-color: #93C5FD; box-shadow: 0 2px 8px rgba(59,130,246,0.06); }
+  .vinc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .vinc-avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .vinc-info { flex: 1; }
+  .vinc-name { font-size: 14px; font-weight: 500; }
+  .vinc-rel { font-size: 12px; color: #6B7280; }
+  .vinc-note { margin-top: 10px; font-size: 12px; color: #6B7280; }
+
+  /* Autorizações */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .auth-item { border: 0.5px solid #E5E7EB; border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+  .auth-item:last-child { margin-bottom: 0; }
+  .auth-head { display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; transition: background 0.15s; }
+  .auth-head:hover { background: #FAFBFC; }
+  .auth-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .auth-dot-active { background: #059669; }
+  .auth-dot-expired { background: #D1D5DB; }
+  .auth-info { flex: 1; }
+  .auth-title { font-size: 13px; font-weight: 500; }
+  .auth-sub { font-size: 12px; color: #6B7280; }
+  .auth-status { font-size: 11px; font-weight: 500; }
+  .auth-status-active { color: #059669; }
+  .auth-status-expired { color: #D1D5DB; }
+  .auth-chevron { font-size: 14px; color: #6B7280; transition: transform 0.2s; }
+  .auth-detail { padding: 0 12px 12px; border-top: 0.5px solid #E5E7EB; }
+  .auth-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-top: 10px; font-size: 12px; }
+  .auth-detail-grid .lbl { color: #6B7280; }
+  .auth-detail-grid .val { margin-top: 2px; font-weight: 500; }
+  .auth-detail-grid .full { grid-column: 1 / -1; }
+  .btn-revoke { font-size: 11px; font-weight: 500; color: #DC2626; background: #FEF2F2; border: 0.5px solid #FECACA; border-radius: 6px; padding: 4px 10px; margin-top: 10px; }
+  .btn-revoke:hover { background: #FEE2E2; }
+  .btn-new { font-size: 12px; font-weight: 500; color: #3B82F6; background: none; border: none; display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  .btn-new:hover { text-decoration: underline; }
+
+  /* Aguardando */
+  .aguard-card { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 0.5px solid #E5E7EB; border-radius: 10px; cursor: pointer; transition: all 0.15s; margin-bottom: 8px; }
+  .aguard-card:last-child { margin-bottom: 0; }
+  .aguard-card:hover { border-color: #93C5FD; box-shadow: 0 2px 8px rgba(59,130,246,0.06); }
+  .aguard-avatar { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 500; flex-shrink: 0; }
+  .aguard-info { flex: 1; }
+  .aguard-name { font-size: 13px; font-weight: 500; }
+  .aguard-sub { font-size: 12px; color: #6B7280; }
+  .btn-primary { font-size: 12px; font-weight: 500; color: #fff; background: #3B82F6; border: none; border-radius: 8px; padding: 5px 14px; }
+  .btn-primary:hover { background: #2563EB; }
+
+  @media (max-width: 1024px) {
+    .content { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 0.5px solid #E5E7EB; }
+    .vinculos-grid { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Header -->
+  <header class="header">
+    <span class="header-brand">PACC Manager</span>
+    <div class="header-spacer"></div>
+    <button class="bell-btn" aria-label="Notificações" onclick="location.href='notificacoes.html'">
+      <i class="ti ti-bell" style="font-size:16px;color:#6B7280"></i>
+      <span class="bell-badge">3</span>
+    </button>
+    <button class="header-link" onclick="location.href='index.html'">Voltar ao hub</button>
+    <button class="header-link">Sair</button>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Navegação">
+    <button class="bc-back" onclick="location.href='busca.html'"><i class="ti ti-chevron-left" style="font-size:16px"></i> Busca</button>
+    <i class="ti ti-chevron-right bc-sep"></i>
+    <span class="bc-current">Carlos Mendes</span>
+  </nav>
+
+  <!-- Content grid -->
+  <div class="content">
+
+    <!-- ════ SIDEBAR ════ -->
+    <aside class="sidebar">
+      <!-- Identificação -->
+      <div class="sid-id">
+        <div class="sid-avatar" style="background:#F0FDF4;color:#166534;">CM</div>
+        <div class="sid-name">Carlos Mendes</div>
+        <span class="badge badge-socio">Sócio</span>
+      </div>
+
+      <!-- Dados -->
+      <div class="sid-section">
+        <div class="sid-row">
+          <span class="sid-label">CPF</span>
+          <span class="sid-value sid-value-num">021.345.678-90</span>
+        </div>
+        <div class="sid-row">
+          <span class="sid-label">Telefone</span>
+          <span class="sid-value">(51) 99123-4567</span>
+        </div>
+        <div class="sid-row">
+          <span class="sid-label">Placa</span>
+          <span class="sid-value">IYZ-3A18</span>
+        </div>
+      </div>
+
+      <!-- Presença -->
+      <div class="sid-section">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <i class="ti ti-map-pin" style="font-size:14px;color:#3B82F6"></i>
+          <span class="sid-label">Presença</span>
+        </div>
+        <div class="presenca-box">
+          <div class="presenca-dot"></div>
+          <div>
+            <div class="presenca-title">No clube agora</div>
+            <div class="presenca-sub">09:42 · Portaria Principal</div>
+          </div>
+        </div>
+        <div class="hist-row"><span>06/08</span><span>10:15–17:30</span></div>
+        <div class="hist-row"><span>04/08</span><span>08:00–12:45</span></div>
+        <div class="hist-row"><span>01/08</span><span>14:20–19:10</span></div>
+      </div>
+
+      <!-- Observações -->
+      <div class="sid-section obs-wrap">
+        <div class="obs-header">
+          <i class="ti ti-notes" style="font-size:14px;color:#3B82F6"></i>
+          <span class="sid-label">Observações</span>
+          <button class="obs-add"><i class="ti ti-plus" style="font-size:12px"></i></button>
+        </div>
+        <div class="obs-body">
+          Sócio fundador, conselho fiscal. Vem com esposa Lucia e filho Pedro.
+          <div class="obs-meta">Felipe · 15/07</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ════ ÁREA PRINCIPAL ════ -->
+    <div class="main">
+
+      <!-- Pendência banner (ÚNICO ponto de ação de cadastro) -->
+      <div class="pendencia">
+        <i class="ti ti-alert-circle" style="font-size:16px;color:#D97706;"></i>
+        <div class="pendencia-text">
+          <span class="pendencia-title">Foto de perfil ausente</span>
+          <span class="pendencia-sub">Cadastro incompleto — aguardando selfie via Bot</span>
+        </div>
+        <button class="btn-whatsapp">
+          <i class="ti ti-brand-whatsapp" style="font-size:14px;"></i> Reenviar link
+        </button>
+      </div>
+
+      <!-- Métricas -->
+      <div class="metrics">
+        <div class="metric metric-green">
+          <div class="metric-label">Autorizações ativas</div>
+          <div class="metric-val">2</div>
+        </div>
+        <div class="metric metric-amber">
+          <div class="metric-label">Aguardando</div>
+          <div class="metric-val">2</div>
+        </div>
+        <div class="metric metric-neutral">
+          <div class="metric-label">Pessoas vinculadas</div>
+          <div class="metric-val">3</div>
+        </div>
+        <div class="metric metric-neutral">
+          <div class="metric-label">Visitas este mês</div>
+          <div class="metric-val">7</div>
+        </div>
+      </div>
+
+      <!-- Vínculos (SEM bolinhas de presença) -->
+      <div class="box">
+        <div class="box-header">
+          <i class="ti ti-arrows-split" style="font-size:15px;color:#3B82F6"></i>
+          <span class="box-title">Vínculos</span>
+          <span class="box-count">3 pessoas autorizadas por Carlos</span>
+        </div>
+        <div class="vinculos-grid">
+          <div class="vinc-card" onclick="location.href='perfil.html'">
+            <div class="vinc-top">
+              <div class="vinc-avatar" style="background:#F0F9FF;color:#0C4A6E;">LM</div>
+              <div class="vinc-info">
+                <div class="vinc-name">Lucia Mendes</div>
+                <div class="vinc-rel">Cônjuge</div>
+              </div>
+              <i class="ti ti-chevron-right" style="font-size:14px;color:#D1D5DB;"></i>
+            </div>
+            <span class="badge badge-dep">Dependente</span>
+          </div>
+          <div class="vinc-card" onclick="location.href='perfil.html'">
+            <div class="vinc-top">
+              <div class="vinc-avatar" style="background:#F0F9FF;color:#0C4A6E;">PM</div>
+              <div class="vinc-info">
+                <div class="vinc-name">Pedro Mendes</div>
+                <div class="vinc-rel">Filho</div>
+              </div>
+              <i class="ti ti-chevron-right" style="font-size:14px;color:#D1D5DB;"></i>
+            </div>
+            <span class="badge badge-dep">Dependente</span>
+          </div>
+          <div class="vinc-card" onclick="location.href='perfil.html'">
+            <div class="vinc-top">
+              <div class="vinc-avatar" style="background:#FFFBEB;color:#92400E;">JF</div>
+              <div class="vinc-info">
+                <div class="vinc-name">Jorge Fernandes</div>
+                <div class="vinc-rel">Convidado</div>
+              </div>
+              <i class="ti ti-chevron-right" style="font-size:14px;color:#D1D5DB;"></i>
+            </div>
+            <span class="badge badge-vis">Visitante</span>
+          </div>
+        </div>
+        <div class="vinc-note">
+          <i class="ti ti-info-circle" style="font-size:12px;margin-right:3px;"></i>
+          Sócio titular — sem patrocinador acima
+        </div>
+      </div>
+
+      <!-- Autorizações + Aguardando -->
+      <div class="two-col">
+
+        <!-- Autorizações expandíveis -->
+        <div class="box">
+          <div class="box-header">
+            <i class="ti ti-shield-check" style="font-size:15px;color:#3B82F6"></i>
+            <span class="box-title">Autorizações</span>
+            <button class="btn-new"><i class="ti ti-plus" style="font-size:13px"></i> Nova</button>
+          </div>
+
+          <div class="auth-item">
+            <div class="auth-head" data-expanded="true">
+              <div class="auth-dot auth-dot-active"></div>
+              <div class="auth-info">
+                <div class="auth-title">Acesso geral — Sócio titular</div>
+                <div class="auth-sub">Clube inteiro · Permanente</div>
+              </div>
+              <span class="auth-status auth-status-active">Ativa</span>
+              <i class="ti ti-chevron-up auth-chevron"></i>
+            </div>
+            <div class="auth-detail">
+              <div class="auth-detail-grid">
+                <div><span class="lbl">Autorizador</span><div class="val">Administração PACC</div></div>
+                <div><span class="lbl">Desde</span><div class="val">01/01/2020</div></div>
+                <div class="full"><span class="lbl">Observação</span><div class="val">Sócio fundador, cota 047</div></div>
+              </div>
+              <button class="btn-revoke">Revogar acesso</button>
+            </div>
+          </div>
+
+          <div class="auth-item">
+            <div class="auth-head" data-expanded="false">
+              <div class="auth-dot auth-dot-active"></div>
+              <div class="auth-info">
+                <div class="auth-title">Baile de Debutantes</div>
+                <div class="auth-sub">Salão Nobre · 22/08/2026</div>
+              </div>
+              <span class="auth-status auth-status-active">Ativa</span>
+              <i class="ti ti-chevron-down auth-chevron"></i>
+            </div>
+            <div class="auth-detail" style="display:none;">
+              <div class="auth-detail-grid">
+                <div><span class="lbl">Autorizador</span><div class="val">Administração PACC</div></div>
+                <div><span class="lbl">Período</span><div class="val">22/08/2026, 20h–02h</div></div>
+              </div>
+              <button class="btn-revoke">Revogar acesso</button>
+            </div>
+          </div>
+
+          <div class="auth-item">
+            <div class="auth-head" data-expanded="false">
+              <div class="auth-dot auth-dot-expired"></div>
+              <div class="auth-info">
+                <div class="auth-title" style="color:#6B7280;">Churrasco fim de ano</div>
+                <div class="auth-sub" style="color:#D1D5DB;">Churrasqueira · 20/12/2025</div>
+              </div>
+              <span class="auth-status auth-status-expired">Expirada</span>
+              <i class="ti ti-chevron-down auth-chevron"></i>
+            </div>
+            <div class="auth-detail" style="display:none;">
+              <div class="auth-detail-grid" style="color:#6B7280;">
+                <div><span class="lbl">Autorizador</span><div>Carlos Mendes (próprio)</div></div>
+                <div><span class="lbl">Período</span><div>20/12/2025, 12h–22h</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aguardando autorização -->
+        <div class="box">
+          <div class="box-header">
+            <i class="ti ti-clock-pause" style="font-size:15px;color:#D97706"></i>
+            <span class="box-title">Aguardando autorização</span>
+            <span class="box-badge">2</span>
+          </div>
+          <div class="aguard-card" onclick="location.href='perfil.html'">
+            <div class="aguard-avatar" style="background:#FFFBEB;color:#92400E;">MF</div>
+            <div class="aguard-info">
+              <div class="aguard-name">Marina Ferreira</div>
+              <div class="aguard-sub">Visitante · Baile de Debutantes</div>
+            </div>
+            <button class="btn-primary" onclick="event.stopPropagation()">Definir acesso</button>
+          </div>
+          <div class="aguard-card" onclick="location.href='perfil.html'">
+            <div class="aguard-avatar" style="background:#EFF6FF;color:#1E40AF;">RS</div>
+            <div class="aguard-info">
+              <div class="aguard-name">Rafael Santos</div>
+              <div class="aguard-sub">Prestador · Buffet Real</div>
+            </div>
+            <button class="btn-primary" onclick="event.stopPropagation()">Definir acesso</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Expandir/colapsar autorizações
+document.querySelectorAll('.auth-head').forEach(h => {
+  h.addEventListener('click', () => {
+    const d = h.nextElementSibling;
+    const c = h.querySelector('.auth-chevron');
+    const open = d.style.display !== 'none';
+    d.style.display = open ? 'none' : '';
+    c.className = c.className.replace(/ti-chevron-(up|down)/, open ? 'ti-chevron-down' : 'ti-chevron-up');
+    h.dataset.expanded = String(!open);
+  });
+});
+
+// Hover nos cards clicáveis (vínculos + aguardando)
+document.querySelectorAll('.vinc-card, .aguard-card').forEach(c => {
+  c.addEventListener('mouseenter', () => { c.style.borderColor = '#93C5FD'; c.style.boxShadow = '0 2px 8px rgba(59,130,246,0.06)'; });
+  c.addEventListener('mouseleave', () => { c.style.borderColor = ''; c.style.boxShadow = ''; });
+});
+</script>
+</body>
+</html>

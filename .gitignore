@@ -1,0 +1,34 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores/IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Segredos e configs locais — nunca versionar
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*secret*
+*credentials*
+
+# Dependências e build (caso entrem ferramentas futuras)
+node_modules/
+dist/
+build/
+.cache/
+
+# Logs e temporários
+*.log
+npm-debug.log*
+.tmp/
+*.tmp
+
+# Vercel (gerado localmente pelo CLI, não deve ser versionado)
+.vercel
