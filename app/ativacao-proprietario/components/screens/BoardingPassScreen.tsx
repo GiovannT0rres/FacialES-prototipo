@@ -14,7 +14,7 @@ function horaAtual() {
   return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 }
 
-export default function BoardingPassScreen({ unidade }: { unidade: string }) {
+export default function BoardingPassScreen() {
   const hora = horaAtual();
 
   return (
@@ -29,21 +29,14 @@ export default function BoardingPassScreen({ unidade }: { unidade: string }) {
 
       <div className="flex flex-1 flex-col justify-end gap-2 overflow-hidden p-3">
         <div className="flex justify-start">
-          <div className="max-w-[85%] rounded-lg rounded-tl-none bg-white p-3 shadow">
+          <div className="max-w-[85%] whitespace-pre-line rounded-lg rounded-tl-none bg-white p-3 shadow">
             <p className="text-sm text-neutral-800">
-              ✅ Seu acesso foi liberado! Aqui está o seu passe:
+              {"Autorização concedida 🤩\n\n" +
+                "📱 SUPORTE: Exemplo\n" +
+                "🪪 LOGIN: Exemplo\n" +
+                "🔐 SENHA: Exemplo\n\n" +
+                "🖥 SISTEMA: https:/exemplo.entradasegura.com.br"}
             </p>
-
-            <div className="mt-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">
-                Acesso Liberado
-              </p>
-              <p className="mt-1 text-base font-bold text-neutral-900">
-                {PEDIDO_MOCK.nome}
-              </p>
-              <p className="text-sm text-neutral-700">Unidade {unidade}</p>
-              <p className="text-sm text-neutral-700">{PEDIDO_MOCK.condominio}</p>
-            </div>
 
             <span className="mt-2 block text-right text-[10px] text-neutral-400">
               {hora}

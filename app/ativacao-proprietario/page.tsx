@@ -37,7 +37,7 @@ export default function AtivacaoProprietarioApp() {
 
       {cenario === "ativar" && unidadeAtivada && (
         <PhoneShell>
-          <BoardingPassScreen unidade={unidadeAtivada} />
+          <BoardingPassScreen />
         </PhoneShell>
       )}
 
