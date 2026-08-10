@@ -1,34 +1,41 @@
-# Sistema operacional
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
 .DS_Store
-Thumbs.db
-desktop.ini
-
-# Editores/IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Segredos e configs locais — nunca versionar
-.env
-.env.*
-!.env.example
 *.pem
-*.key
-*secret*
-*credentials*
 
-# Dependências e build (caso entrem ferramentas futuras)
-node_modules/
-dist/
-build/
-.cache/
-
-# Logs e temporários
-*.log
+# debug
 npm-debug.log*
-.tmp/
-*.tmp
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Vercel (gerado localmente pelo CLI, não deve ser versionado)
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
 .vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
