@@ -31,6 +31,7 @@ const CENARIOS: Cenario[] = [
 export default function FacialApp() {
   const [cenario, setCenario] = useState<Cenario>(CENARIOS[0]);
   const [stepIndex, setStepIndex] = useState(0);
+  const [falha, setFalha] = useState(false);
 
   const steps = CENARIO_STEPS[cenario];
   const screen: Screen = steps[stepIndex];
@@ -39,6 +40,7 @@ export default function FacialApp() {
   function iniciarCenario(novoCenario: Cenario) {
     setCenario(novoCenario);
     setStepIndex(0);
+    setFalha(false);
   }
 
   function avancar() {
@@ -49,7 +51,19 @@ export default function FacialApp() {
     iniciarCenario(cenario);
   }
 
+  function responderPerguntaSeguranca(opcao: string) {
+    if (opcao === PERGUNTA_SEGURANCA.correta) {
+      avancar();
+    } else {
+      setFalha(true);
+    }
+  }
+
   function renderTotem() {
+    if (falha) {
+      return <AcessoNegadoScreen onReiniciar={reiniciar} />;
+    }
+
     switch (screen) {
       case "splash":
         return <SplashScreen onQueroEntrar={avancar} />;
@@ -65,7 +79,7 @@ export default function FacialApp() {
           <PerguntaSegurancaScreen
             pergunta={PERGUNTA_SEGURANCA.pergunta}
             opcoes={PERGUNTA_SEGURANCA.opcoes}
-            onResponder={avancar}
+            onResponder={responderPerguntaSeguranca}
           />
         );
 
@@ -116,11 +130,12 @@ export default function FacialApp() {
   }
 
   const mostrarWhatsapp =
-    (cenarioTemWhatsapp &&
+    !falha &&
+    ((cenarioTemWhatsapp &&
       (screen === "whatsapp-proprietario" ||
         screen === "sucesso" ||
         screen === "aviso-entrada-proprietario")) ||
-    (!cenarioTemWhatsapp && screen === "aviso-entrada-proprietario");
+      (!cenarioTemWhatsapp && screen === "aviso-entrada-proprietario"));
 
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center gap-6 bg-slate-200 p-4">
@@ -132,7 +147,7 @@ export default function FacialApp() {
             modo={cenarioTemWhatsapp ? "autorizacao" : "aviso"}
             pessoaEntrou={screen === "aviso-entrada-proprietario"}
             onAutorizar={avancar}
-            onNegar={() => setStepIndex(steps.indexOf("acesso-negado"))}
+            onNegar={() => setFalha(true)}
           />
         </PhoneShell>
       )}
