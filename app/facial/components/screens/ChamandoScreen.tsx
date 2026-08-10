@@ -9,7 +9,10 @@ export default function ChamandoScreen({ onConectado }: { onConectado: () => voi
   }, [onConectado]);
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-6 bg-gradient-to-b from-white via-teal-50 to-teal-200 px-6">
+    <div
+      onClick={onConectado}
+      className="flex h-full w-full flex-col items-center justify-center gap-6 bg-gradient-to-b from-white via-teal-50 to-teal-200 px-6"
+    >
       <div className="flex w-full flex-col items-center gap-8 rounded-3xl bg-gradient-to-b from-blue-500 to-blue-800 px-6 py-14 shadow-lg">
         <p className="text-center text-xl font-bold text-white">
           Um instante,
