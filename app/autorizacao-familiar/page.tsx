@@ -23,7 +23,18 @@ export default function AutorizacaoFamiliarApp() {
 
       {unidadeAtivada && (
         <PhoneShell>
-          <BoardingPassScreen nome={PEDIDO_MOCK.nome} />
+          <BoardingPassScreen
+            nome={PEDIDO_MOCK.nome}
+            mensagem={
+              "Autorização de acesso concedida! ✅\n\n" +
+              "Acesso liberado por RECONHECIMENTO FACIAL\n" +
+              "📍 Local: Exemplo\n" +
+              "🔓 Autorizador: Exemplo\n" +
+              "🏠 Unidade: Exemplo\n" +
+              "⏳ Validade: 17/07/2026 à 19/07/2026\n\n" +
+              "Boa visita!"
+            }
+          />
         </PhoneShell>
       )}
 
