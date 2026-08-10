@@ -18,7 +18,7 @@ export default function BoardingPassScreen({
   nome = PEDIDO_MOCK.nome,
 }: {
   nome?: string;
-} = {}) {
+}) {
   const hora = horaAtual();
 
   return (
