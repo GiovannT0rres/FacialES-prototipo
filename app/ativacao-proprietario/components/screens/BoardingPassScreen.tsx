@@ -14,7 +14,11 @@ function horaAtual() {
   return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 }
 
-export default function BoardingPassScreen() {
+export default function BoardingPassScreen({
+  nome = PEDIDO_MOCK.nome,
+}: {
+  nome?: string;
+} = {}) {
   const hora = horaAtual();
 
   return (
@@ -22,7 +26,7 @@ export default function BoardingPassScreen() {
       <div className="flex items-center gap-3 bg-[#075e54] px-4 py-4 shadow">
         <div className="h-10 w-10 overflow-hidden rounded-full">{AVATAR}</div>
         <div className="flex flex-col">
-          <span className="text-sm font-bold text-white">{PEDIDO_MOCK.nome}</span>
+          <span className="text-sm font-bold text-white">{nome}</span>
           <span className="text-xs text-emerald-100">online</span>
         </div>
       </div>
