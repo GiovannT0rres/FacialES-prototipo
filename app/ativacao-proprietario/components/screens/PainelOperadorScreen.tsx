@@ -133,7 +133,7 @@ export default function PainelOperadorScreen({
         <button
           onClick={() => unidadeSelecionada && onAtivar(unidadeSelecionada)}
           disabled={!unidadeSelecionada}
-          className="w-full rounded-xl bg-emerald-500 py-4 text-center text-lg font-bold text-white shadow transition enabled:hover:bg-emerald-400 active:enabled:scale-[0.98] disabled:cursor-not-allowed disabled:bg-neutral-700 disabled:text-neutral-500"
+          className="w-full rounded-xl bg-emerald-500 py-4 text-center text-lg font-bold text-white shadow transition enabled:hover:bg-emerald-400 active:enabled:scale-[0.98] disabled:cursor-not-allowed disabled:bg-neutral-700 disabled:text-neutral-300"
         >
           Autorizar
         </button>
