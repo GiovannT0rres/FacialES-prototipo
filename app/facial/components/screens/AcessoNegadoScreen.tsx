@@ -16,8 +16,8 @@ export default function AcessoNegadoScreen({
           Acesso Negado
         </h1>
         <p className="text-neutral-800">
-          O proprietário não autorizou sua entrada. Procure a administração
-          do condomínio.
+          Não foi possível validar o usuário. Procure a administração do
+          condomínio.
         </p>
       </div>
 
