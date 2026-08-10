@@ -12,7 +12,6 @@ import SucessoScreen from "./components/screens/SucessoScreen";
 import ChamandoScreen from "./components/screens/ChamandoScreen";
 import WhatsappProprietarioScreen from "./components/screens/WhatsappProprietarioScreen";
 import AcessoNegadoScreen from "./components/screens/AcessoNegadoScreen";
-import AvisoEntradaProprietarioScreen from "./components/screens/AvisoEntradaProprietarioScreen";
 import {
   APARTAMENTOS,
   CENARIO_LABEL,
@@ -35,6 +34,7 @@ export default function FacialApp() {
 
   const steps = CENARIO_STEPS[cenario];
   const screen: Screen = steps[stepIndex];
+  const cenarioTemWhatsapp = steps.includes("whatsapp-proprietario");
 
   function iniciarCenario(novoCenario: Cenario) {
     setCenario(novoCenario);
@@ -82,15 +82,16 @@ export default function FacialApp() {
         return <ChamandoScreen onConectado={avancar} />;
 
       case "whatsapp-proprietario":
+      case "sucesso":
+        if (screen === "sucesso") {
+          return (
+            <SucessoScreen itens={SUCESSO_ITENS[cenario]} onConcluido={avancar} />
+          );
+        }
         return <ChamandoScreen onConectado={() => {}} />;
 
       case "acesso-negado":
         return <AcessoNegadoScreen onReiniciar={reiniciar} />;
-
-      case "sucesso":
-        return (
-          <SucessoScreen itens={SUCESSO_ITENS[cenario]} onConcluido={avancar} />
-        );
 
       case "aviso-entrada-proprietario":
         return (
@@ -114,22 +115,25 @@ export default function FacialApp() {
     }
   }
 
+  const mostrarWhatsapp =
+    (cenarioTemWhatsapp &&
+      (screen === "whatsapp-proprietario" ||
+        screen === "sucesso" ||
+        screen === "aviso-entrada-proprietario")) ||
+    (!cenarioTemWhatsapp && screen === "aviso-entrada-proprietario");
+
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center gap-6 bg-slate-200 p-4">
       <PhoneShell>{renderTotem()}</PhoneShell>
 
-      {screen === "whatsapp-proprietario" && (
+      {mostrarWhatsapp && (
         <PhoneShell>
           <WhatsappProprietarioScreen
+            modo={cenarioTemWhatsapp ? "autorizacao" : "aviso"}
+            pessoaEntrou={screen === "aviso-entrada-proprietario"}
             onAutorizar={avancar}
             onNegar={() => setStepIndex(steps.indexOf("acesso-negado"))}
           />
-        </PhoneShell>
-      )}
-
-      {screen === "aviso-entrada-proprietario" && (
-        <PhoneShell>
-          <AvisoEntradaProprietarioScreen />
         </PhoneShell>
       )}
 
