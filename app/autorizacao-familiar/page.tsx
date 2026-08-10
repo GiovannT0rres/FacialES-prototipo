@@ -9,19 +9,19 @@ import PainelOperadorScreen from "./components/screens/PainelOperadorScreen";
 import { PEDIDO_MOCK } from "./lib/types";
 
 export default function AutorizacaoFamiliarApp() {
-  const [unidadeAtivada, setUnidadeAtivada] = useState<string | null>(null);
+  const [ativado, setAtivado] = useState(false);
 
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center gap-6 bg-slate-200 p-4">
       <PhoneShell>
-        {unidadeAtivada ? (
-          <SucessoAtivacaoScreen onReiniciar={() => setUnidadeAtivada(null)} />
+        {ativado ? (
+          <SucessoAtivacaoScreen onReiniciar={() => setAtivado(false)} />
         ) : (
-          <PainelOperadorScreen onAtivar={setUnidadeAtivada} />
+          <PainelOperadorScreen onAtivar={() => setAtivado(true)} />
         )}
       </PhoneShell>
 
-      {unidadeAtivada && (
+      {ativado && (
         <PhoneShell>
           <BoardingPassScreen
             nome={PEDIDO_MOCK.nome}

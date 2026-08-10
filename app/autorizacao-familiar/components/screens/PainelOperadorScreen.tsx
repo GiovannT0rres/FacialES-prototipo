@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MOTIVOS, PEDIDO_MOCK, UNIDADES, type Motivo } from "../../lib/types";
+import { MOTIVOS, PEDIDO_MOCK, type Motivo } from "../../lib/types";
 
 const AVATAR = (
   <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-emerald-400 to-emerald-600">
@@ -41,9 +41,8 @@ function Cabecalho() {
 export default function PainelOperadorScreen({
   onAtivar,
 }: {
-  onAtivar: (unidade: string) => void;
+  onAtivar: () => void;
 }) {
-  const [unidadeAberta, setUnidadeAberta] = useState(false);
   const [podeAutorizar, setPodeAutorizar] = useState<"sim" | "nao">("nao");
   const motivoAtivo: Motivo = "Familiar";
 
@@ -146,38 +145,12 @@ export default function PainelOperadorScreen({
           </div>
         </div>
 
-        <div className="rounded-2xl bg-neutral-800 p-4 shadow">
-          <p className="mb-3 text-center text-sm font-bold text-white">
-            Qual a Unidade?
-          </p>
-
-          <button
-            onClick={() => setUnidadeAberta((aberta) => !aberta)}
-            className="flex w-full items-center justify-between rounded-xl border border-neutral-600 bg-neutral-700 px-4 py-3 text-left text-base font-bold text-white"
-          >
-            Selecione...
-            <span className={`transition ${unidadeAberta ? "rotate-180" : ""}`}>
-              ▾
-            </span>
-          </button>
-
-          {unidadeAberta && (
-            <div className="mt-2 flex flex-col gap-2">
-              {UNIDADES.map((unidade) => (
-                <button
-                  key={unidade}
-                  onClick={() => {
-                    setUnidadeAberta(false);
-                    onAtivar(unidade);
-                  }}
-                  className="w-full rounded-xl border border-neutral-600 bg-neutral-700 py-3 text-center text-base font-bold text-white transition hover:border-emerald-400 hover:bg-neutral-600 active:scale-[0.98]"
-                >
-                  {unidade}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        <button
+          onClick={onAtivar}
+          className="w-full rounded-xl bg-emerald-500 py-4 text-center text-lg font-bold text-white shadow transition hover:bg-emerald-400 active:scale-[0.98]"
+        >
+          Autorizar
+        </button>
       </div>
     </div>
   );

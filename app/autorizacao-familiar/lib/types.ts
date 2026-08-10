@@ -7,11 +7,8 @@ export type Motivo =
   | "Familiar";
 
 export const MOTIVOS: readonly Motivo[] = [
-  "Proprietário",
-  "Equipe",
   "Visitante",
   "Prestador de Serviço",
-  "Colaborador",
   "Familiar",
 ];
 
