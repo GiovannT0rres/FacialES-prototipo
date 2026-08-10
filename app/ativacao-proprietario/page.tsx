@@ -5,6 +5,7 @@ import Link from "next/link";
 import PhoneShell from "../facial/components/PhoneShell";
 import PainelOperadorScreen from "./components/screens/PainelOperadorScreen";
 import BoardingPassScreen from "./components/screens/BoardingPassScreen";
+import SucessoAtivacaoScreen from "./components/screens/SucessoAtivacaoScreen";
 
 export default function AtivacaoProprietarioApp() {
   const [unidadeAtivada, setUnidadeAtivada] = useState<string | null>(null);
@@ -12,7 +13,11 @@ export default function AtivacaoProprietarioApp() {
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center gap-6 bg-slate-200 p-4">
       <PhoneShell>
-        <PainelOperadorScreen onAtivar={setUnidadeAtivada} />
+        {unidadeAtivada ? (
+          <SucessoAtivacaoScreen onReiniciar={() => setUnidadeAtivada(null)} />
+        ) : (
+          <PainelOperadorScreen onAtivar={setUnidadeAtivada} />
+        )}
       </PhoneShell>
 
       {unidadeAtivada && (

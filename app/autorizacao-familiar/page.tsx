@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import PhoneShell from "../facial/components/PhoneShell";
 import BoardingPassScreen from "../ativacao-proprietario/components/screens/BoardingPassScreen";
+import SucessoAtivacaoScreen from "../ativacao-proprietario/components/screens/SucessoAtivacaoScreen";
 import PainelOperadorScreen from "./components/screens/PainelOperadorScreen";
 import { PEDIDO_MOCK } from "./lib/types";
 
@@ -13,7 +14,11 @@ export default function AutorizacaoFamiliarApp() {
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center gap-6 bg-slate-200 p-4">
       <PhoneShell>
-        <PainelOperadorScreen onAtivar={setUnidadeAtivada} />
+        {unidadeAtivada ? (
+          <SucessoAtivacaoScreen onReiniciar={() => setUnidadeAtivada(null)} />
+        ) : (
+          <PainelOperadorScreen onAtivar={setUnidadeAtivada} />
+        )}
       </PhoneShell>
 
       {unidadeAtivada && (
