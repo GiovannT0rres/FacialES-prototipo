@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { ScanFace, UserCheck } from "lucide-react";
+import { ScanFace, UserCheck, UserPlus } from "lucide-react";
 
 export default function Hub() {
   const router = useRouter();
@@ -28,6 +28,15 @@ export default function Hub() {
       textColor: "text-emerald-600",
       bgLight: "bg-emerald-50",
       path: "/ativacao-proprietario",
+    },
+    {
+      id: "autorizacao-familiar",
+      title: "Autorização via Check-in",
+      description: "Painel do operador ativando um familiar para uma unidade.",
+      icon: UserPlus,
+      textColor: "text-sky-600",
+      bgLight: "bg-sky-50",
+      path: "/autorizacao-familiar",
     },
     // Novo módulo: adicione o próximo card aqui.
   ];
