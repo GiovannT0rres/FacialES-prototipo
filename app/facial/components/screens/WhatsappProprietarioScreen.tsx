@@ -59,19 +59,6 @@ function Cabecalho({ digitando }: { digitando: boolean }) {
   );
 }
 
-function BolhaRecebida({ children, hora }: { children: React.ReactNode; hora: string }) {
-  return (
-    <div className="flex justify-start">
-      <div className="max-w-[80%] rounded-lg rounded-tl-none bg-white px-3 py-2 shadow">
-        <div className="text-sm text-neutral-800">{children}</div>
-        <span className="mt-1 block text-right text-[10px] text-neutral-400">
-          {hora}
-        </span>
-      </div>
-    </div>
-  );
-}
-
 function FotoBolha({ hora, legenda }: { hora: string; legenda: string }) {
   return (
     <div className="flex justify-start">
@@ -155,19 +142,8 @@ export default function WhatsappProprietarioScreen({
       <div className="flex flex-1 flex-col justify-end gap-2 overflow-hidden p-3">
         {modo === "autorizacao" ? (
           <>
-            {etapaAutorizacao === "digitando-1" && (
-              <div className="flex justify-start">
-                <Digitando />
-              </div>
-            )}
-
-            {etapaAutorizacao !== "digitando-1" && (
-              <BolhaRecebida hora={hora}>
-                🔔 Alguém está na porta e solicita acesso.
-              </BolhaRecebida>
-            )}
-
-            {etapaAutorizacao === "digitando-2" && (
+            {(etapaAutorizacao === "digitando-1" ||
+              etapaAutorizacao === "digitando-2") && (
               <div className="flex justify-start">
                 <Digitando />
               </div>
@@ -176,7 +152,10 @@ export default function WhatsappProprietarioScreen({
             {(etapaAutorizacao === "foto" ||
               etapaAutorizacao === "decisao" ||
               etapaAutorizacao === "respondido") && (
-              <FotoBolha hora={hora} legenda="Autorizar a entrada desta pessoa?" />
+              <FotoBolha
+                hora={hora}
+                legenda="Você autoriza o JOÃO DA SILVA RIBEIRO?"
+              />
             )}
 
             {etapaAutorizacao === "decisao" && (
