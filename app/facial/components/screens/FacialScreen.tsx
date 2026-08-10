@@ -46,7 +46,7 @@ export default function FacialScreen({ onConcluido }: { onConcluido: () => void 
 
   if (step === "inicial") {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-between bg-neutral-200 px-6 pt-24 pb-10">
+      <div className="flex h-full w-full flex-col items-center justify-center gap-16 bg-neutral-200 px-6">
         <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
           <path d="M20 60V40a20 20 0 0 1 20-20h20" stroke="#111" strokeWidth="10" strokeLinecap="round" fill="none" />
           <path d="M200 60V40a20 20 0 0 0-20-20h-20" stroke="#111" strokeWidth="10" strokeLinecap="round" fill="none" />

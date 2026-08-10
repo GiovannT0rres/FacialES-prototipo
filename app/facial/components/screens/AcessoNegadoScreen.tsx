@@ -1,10 +1,10 @@
 import GradientScreen from "../GradientScreen";
 import PrimaryButton from "../PrimaryButton";
 
-export default function RespostaIncorretaScreen({
-  onSolicitar,
+export default function AcessoNegadoScreen({
+  onReiniciar,
 }: {
-  onSolicitar: () => void;
+  onReiniciar: () => void;
 }) {
   return (
     <GradientScreen tone="red">
@@ -13,15 +13,17 @@ export default function RespostaIncorretaScreen({
           ✕
         </div>
         <h1 className="text-2xl font-extrabold text-neutral-900">
-          Resposta Incorreta
+          Acesso Negado
         </h1>
         <p className="text-neutral-800">
-          Para sua segurança, sua entrada precisará ser autorizada pelo
-          proprietário.
+          O proprietário não autorizou sua entrada. Procure a administração
+          do condomínio.
         </p>
       </div>
 
-      <PrimaryButton onClick={onSolicitar}>Solicitar Autorização</PrimaryButton>
+      <div className="flex flex-col items-center">
+        <PrimaryButton onClick={onReiniciar}>Voltar ao início</PrimaryButton>
+      </div>
     </GradientScreen>
   );
 }
