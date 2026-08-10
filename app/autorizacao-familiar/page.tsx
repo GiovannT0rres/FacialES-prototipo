@@ -5,6 +5,7 @@ import Link from "next/link";
 import PhoneShell from "../facial/components/PhoneShell";
 import BoardingPassScreen from "../ativacao-proprietario/components/screens/BoardingPassScreen";
 import PainelOperadorScreen from "./components/screens/PainelOperadorScreen";
+import { PEDIDO_MOCK } from "./lib/types";
 
 export default function AutorizacaoFamiliarApp() {
   const [unidadeAtivada, setUnidadeAtivada] = useState<string | null>(null);
@@ -17,7 +18,7 @@ export default function AutorizacaoFamiliarApp() {
 
       {unidadeAtivada && (
         <PhoneShell>
-          <BoardingPassScreen />
+          <BoardingPassScreen nome={PEDIDO_MOCK.nome} />
         </PhoneShell>
       )}
 
