@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { ScanFace } from "lucide-react";
+import { ScanFace, UserCheck } from "lucide-react";
 
 export default function Hub() {
   const router = useRouter();
@@ -19,6 +19,15 @@ export default function Hub() {
       textColor: "text-blue-600",
       bgLight: "bg-blue-50",
       path: "/facial",
+    },
+    {
+      id: "ativacao-proprietario",
+      title: "Ativação de Proprietário na plataforma",
+      description: "Painel do operador ativando um proprietário para uma unidade.",
+      icon: UserCheck,
+      textColor: "text-emerald-600",
+      bgLight: "bg-emerald-50",
+      path: "/ativacao-proprietario",
     },
     // Novo módulo: adicione o próximo card aqui.
   ];
