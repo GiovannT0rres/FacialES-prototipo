@@ -22,8 +22,8 @@ export default function Hub() {
     },
     {
       id: "ativacao-proprietario",
-      title: "Ativação de Proprietário na plataforma",
-      description: "Painel do operador ativando um proprietário para uma unidade.",
+      title: "Ativação de proprietário na Plataforma",
+      description: "Tela do síndico autorizando um proprietário na plataforma.",
       icon: UserCheck,
       textColor: "text-emerald-600",
       bgLight: "bg-emerald-50",
@@ -31,8 +31,8 @@ export default function Hub() {
     },
     {
       id: "autorizacao-familiar",
-      title: "Autorização via Check-in",
-      description: "Painel do operador ativando um familiar para uma unidade.",
+      title: "Autorização do proprietário via Whatsapp Check-in ",
+      description: "Painel do proprietário autorizando um familiar na sua unidade.",
       icon: UserPlus,
       textColor: "text-sky-600",
       bgLight: "bg-sky-50",

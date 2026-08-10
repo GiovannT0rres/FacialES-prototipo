@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-type FacialStep = "inicial" | "posicionando" | "sorria" | "analisando" | "concluido";
+type FacialStep = "posicionando" | "sorria" | "analisando" | "concluido";
 
 const AVATAR = (
   <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-neutral-700 to-neutral-900">
@@ -17,11 +17,9 @@ const AVATAR = (
 );
 
 export default function FacialScreen({ onConcluido }: { onConcluido: () => void }) {
-  const [step, setStep] = useState<FacialStep>("inicial");
+  const [step, setStep] = useState<FacialStep>("posicionando");
 
   useEffect(() => {
-    if (step === "inicial") return;
-
     const sequence: { next: FacialStep; delay: number }[] = [
       { next: "sorria", delay: 1200 },
       { next: "analisando", delay: 1400 },
@@ -44,35 +42,9 @@ export default function FacialScreen({ onConcluido }: { onConcluido: () => void 
     return () => clearTimeout(t);
   }, [step, onConcluido]);
 
-  if (step === "inicial") {
-    return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-16 bg-neutral-200 px-6">
-        <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
-          <path d="M20 60V40a20 20 0 0 1 20-20h20" stroke="#111" strokeWidth="10" strokeLinecap="round" fill="none" />
-          <path d="M200 60V40a20 20 0 0 0-20-20h-20" stroke="#111" strokeWidth="10" strokeLinecap="round" fill="none" />
-          <path d="M20 160v20a20 20 0 0 0 20 20h20" stroke="#111" strokeWidth="10" strokeLinecap="round" fill="none" />
-          <path d="M200 160v20a20 20 0 0 1-20 20h-20" stroke="#111" strokeWidth="10" strokeLinecap="round" fill="none" />
-          <circle cx="110" cy="95" r="35" fill="#111" />
-          <path d="M60 175c0-30 22-50 50-50s50 20 50 50" fill="#111" />
-        </svg>
-
-        <div className="flex flex-col items-center gap-6">
-          <p className="text-xl font-bold text-neutral-700">Verificação Facial</p>
-          <button
-            onClick={() => setStep("posicionando")}
-            className="w-full rounded-2xl bg-blue-600 px-10 py-4 text-lg font-bold text-white shadow-md active:scale-[0.98]"
-          >
-            Iniciar Verificação
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   const overlayColor = step === "posicionando" ? "border-white" : "border-green-500";
 
   const labels: Record<FacialStep, string> = {
-    inicial: "",
     posicionando: "Posicione seu rosto...",
     sorria: "Ótimo! Agora, sorria levemente.",
     analisando: "Analisando...",

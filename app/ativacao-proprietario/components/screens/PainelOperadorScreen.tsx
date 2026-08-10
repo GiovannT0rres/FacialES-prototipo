@@ -44,6 +44,7 @@ export default function PainelOperadorScreen({
   onAtivar: (unidade: string) => void;
 }) {
   const [unidadeAberta, setUnidadeAberta] = useState(false);
+  const [unidadeSelecionada, setUnidadeSelecionada] = useState<string | null>(null);
   const motivoAtivo: Motivo = "Proprietário";
 
   const motivoCor: Record<Motivo, string> = {
@@ -105,7 +106,7 @@ export default function PainelOperadorScreen({
             onClick={() => setUnidadeAberta((aberta) => !aberta)}
             className="flex w-full items-center justify-between rounded-xl border border-neutral-600 bg-neutral-700 px-4 py-3 text-left text-base font-bold text-white"
           >
-            Selecione...
+            {unidadeSelecionada ?? "Selecione..."}
             <span className={`transition ${unidadeAberta ? "rotate-180" : ""}`}>
               ▾
             </span>
@@ -118,7 +119,7 @@ export default function PainelOperadorScreen({
                   key={unidade}
                   onClick={() => {
                     setUnidadeAberta(false);
-                    onAtivar(unidade);
+                    setUnidadeSelecionada(unidade);
                   }}
                   className="w-full rounded-xl border border-neutral-600 bg-neutral-700 py-3 text-center text-base font-bold text-white transition hover:border-emerald-400 hover:bg-neutral-600 active:scale-[0.98]"
                 >
@@ -128,6 +129,14 @@ export default function PainelOperadorScreen({
             </div>
           )}
         </div>
+
+        <button
+          onClick={() => unidadeSelecionada && onAtivar(unidadeSelecionada)}
+          disabled={!unidadeSelecionada}
+          className="w-full rounded-xl bg-emerald-500 py-4 text-center text-lg font-bold text-white shadow transition enabled:hover:bg-emerald-400 active:enabled:scale-[0.98] disabled:cursor-not-allowed disabled:bg-neutral-700 disabled:text-neutral-500"
+        >
+          Autorizar
+        </button>
       </div>
     </div>
   );
