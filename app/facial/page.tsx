@@ -79,6 +79,7 @@ export default function FacialApp() {
           <PerguntaSegurancaScreen
             pergunta={PERGUNTA_SEGURANCA.pergunta}
             opcoes={PERGUNTA_SEGURANCA.opcoes}
+            correta={PERGUNTA_SEGURANCA.correta}
             onResponder={responderPerguntaSeguranca}
           />
         );

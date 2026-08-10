@@ -1,10 +1,12 @@
 export default function PerguntaSegurancaScreen({
   pergunta,
   opcoes,
+  correta,
   onResponder,
 }: {
   pergunta: string;
   opcoes: string[];
+  correta: string;
   onResponder: (opcao: string) => void;
 }) {
   return (
@@ -26,7 +28,9 @@ export default function PerguntaSegurancaScreen({
             <button
               key={opcao}
               onClick={() => onResponder(opcao)}
-              className="w-full rounded-xl bg-blue-600 py-4 text-center text-lg font-bold text-white shadow active:scale-[0.98]"
+              className={`w-full rounded-xl bg-blue-600 py-4 text-center text-lg font-bold text-white shadow active:scale-[0.98] ${
+                opcao === correta ? "outline outline-2 outline-emerald-400" : ""
+              }`}
             >
               {opcao}
             </button>
