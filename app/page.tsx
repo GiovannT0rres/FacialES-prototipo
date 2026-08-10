@@ -13,7 +13,7 @@ export default function Hub() {
   const cards = [
     {
       id: "facial",
-      title: "Entrada Segura",
+      title: "Liberação de Visitante na Portaria",
       description: "Cadastro, verificação facial e liberação de acesso.",
       icon: ScanFace,
       textColor: "text-blue-600",
@@ -28,7 +28,7 @@ export default function Hub() {
       <div className="w-full max-w-3xl">
         <div className="text-center mb-12">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-2">
-            Protótipos
+            Portaria Autônoma
           </h1>
           <p className="text-[15px] text-gray-500">
             Selecione o protótipo que deseja acessar

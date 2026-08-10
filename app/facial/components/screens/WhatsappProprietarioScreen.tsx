@@ -72,8 +72,18 @@ function BolhaRecebida({ children, hora }: { children: React.ReactNode; hora: st
   );
 }
 
-function EntrouBolha({ hora }: { hora: string }) {
-  return <BolhaRecebida hora={hora}>🚪 A pessoa acabou de entrar.</BolhaRecebida>;
+function FotoBolha({ hora, legenda }: { hora: string; legenda: string }) {
+  return (
+    <div className="flex justify-start">
+      <div className="max-w-[80%] rounded-lg rounded-tl-none bg-white p-1.5 shadow">
+        <div className="aspect-square w-44 overflow-hidden rounded">{AVATAR_FOTO}</div>
+        <p className="px-1 pt-1.5 text-sm text-neutral-800">{legenda}</p>
+        <span className="block px-1 pb-0.5 text-right text-[10px] text-neutral-400">
+          {hora}
+        </span>
+      </div>
+    </div>
+  );
 }
 
 /**
@@ -166,19 +176,7 @@ export default function WhatsappProprietarioScreen({
             {(etapaAutorizacao === "foto" ||
               etapaAutorizacao === "decisao" ||
               etapaAutorizacao === "respondido") && (
-              <div className="flex justify-start">
-                <div className="max-w-[80%] rounded-lg rounded-tl-none bg-white p-1.5 shadow">
-                  <div className="aspect-square w-44 overflow-hidden rounded">
-                    {AVATAR_FOTO}
-                  </div>
-                  <p className="px-1 pt-1.5 text-sm text-neutral-800">
-                    Autorizar a entrada desta pessoa?
-                  </p>
-                  <span className="block px-1 pb-0.5 text-right text-[10px] text-neutral-400">
-                    {hora}
-                  </span>
-                </div>
-              </div>
+              <FotoBolha hora={hora} legenda="Autorizar a entrada desta pessoa?" />
             )}
 
             {etapaAutorizacao === "decisao" && (
@@ -218,11 +216,15 @@ export default function WhatsappProprietarioScreen({
                 <Digitando />
               </div>
             )}
-            {etapaAviso === "entrou" && <EntrouBolha hora={hora} />}
+            {etapaAviso === "entrou" && (
+              <FotoBolha hora={hora} legenda="🚪 A pessoa acabou de entrar." />
+            )}
           </>
         )}
 
-        {modo === "autorizacao" && pessoaEntrou && <EntrouBolha hora={hora} />}
+        {modo === "autorizacao" && pessoaEntrou && (
+          <FotoBolha hora={hora} legenda="🚪 A pessoa acabou de entrar." />
+        )}
       </div>
     </div>
   );
