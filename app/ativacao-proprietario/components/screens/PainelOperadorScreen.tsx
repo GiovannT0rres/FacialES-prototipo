@@ -40,10 +40,8 @@ function Cabecalho() {
 
 export default function PainelOperadorScreen({
   onAtivar,
-  onRejeitar,
 }: {
   onAtivar: (unidade: string) => void;
-  onRejeitar: () => void;
 }) {
   const [unidadeAberta, setUnidadeAberta] = useState(false);
   const motivoAtivo: Motivo = "Proprietário";
@@ -76,13 +74,6 @@ export default function PainelOperadorScreen({
               {AVATAR}
             </div>
           </div>
-
-          <button
-            onClick={onRejeitar}
-            className="mt-4 text-sm font-bold text-red-400 active:opacity-70"
-          >
-            Rejeitar
-          </button>
         </div>
 
         <div className="rounded-2xl bg-neutral-800 p-4 shadow">

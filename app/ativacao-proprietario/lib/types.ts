@@ -1,16 +1,9 @@
-export type Cenario = "ativar" | "rejeitar";
-
 export type Motivo =
   | "Proprietário"
   | "Equipe"
   | "Visitante"
   | "Prestador de Serviço"
   | "Colaborador";
-
-export const CENARIO_LABEL: Record<Cenario, string> = {
-  ativar: "Ativar",
-  rejeitar: "Rejeitar",
-};
 
 export const MOTIVOS: readonly Motivo[] = [
   "Proprietário",
