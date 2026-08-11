@@ -12,10 +12,11 @@ export const MOTIVOS: readonly Motivo[] = [
   "Familiar",
 ];
 
-export const UNIDADES = ["101", "102", "103", "104"] as const;
+export const UNIDADES = ["101", "102", "103"] as const;
 
 export const PEDIDO_MOCK = {
   nome: "Mariana Andrade",
   telefone: "(11) 97777-6543",
   condominio: "Condomínio Exemplo — Bloco A",
+  foto: "https://i.pravatar.cc/300?img=47",
 };

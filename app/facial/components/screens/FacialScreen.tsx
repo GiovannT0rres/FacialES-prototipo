@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 type FacialStep = "posicionando" | "sorria" | "analisando" | "concluido";
 
 const AVATAR = (
-  <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-neutral-700 to-neutral-900">
-    <svg width="140" height="140" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="8" r="4" fill="#d4a574" />
-      <path
-        d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"
-        fill="#d4a574"
-      />
-    </svg>
+  <div className="flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-b from-neutral-700 to-neutral-900">
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img
+      src="https://i.pravatar.cc/500?img=51"
+      alt="Rosto sendo verificado"
+      className="h-full w-full object-cover"
+    />
   </div>
 );
 
@@ -60,7 +59,13 @@ export default function FacialScreen({ onConcluido }: { onConcluido: () => void 
         />
       </div>
       <div className="absolute inset-x-0 bottom-16 flex flex-col items-center gap-4 px-6">
-        <p className="text-center text-lg font-bold text-white drop-shadow">
+        <p
+          className="text-center text-lg font-bold text-white"
+          style={{
+            textShadow:
+              "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+          }}
+        >
           {labels[step]}
         </p>
         {step === "analisando" && (
