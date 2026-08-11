@@ -16,9 +16,10 @@ import {
   APARTAMENTOS,
   CENARIO_LABEL,
   CENARIO_STEPS,
-  PERGUNTA_SEGURANCA,
   SUCESSO_ITENS,
+  sortearPerguntaSeguranca,
   type Cenario,
+  type PerguntaSeguranca,
   type Screen,
 } from "./lib/types";
 
@@ -32,6 +33,9 @@ export default function FacialApp() {
   const [cenario, setCenario] = useState<Cenario>(CENARIOS[0]);
   const [stepIndex, setStepIndex] = useState(0);
   const [falha, setFalha] = useState(false);
+  const [perguntaSeguranca, setPerguntaSeguranca] = useState<PerguntaSeguranca>(
+    sortearPerguntaSeguranca
+  );
 
   const steps = CENARIO_STEPS[cenario];
   const screen: Screen = steps[stepIndex];
@@ -41,6 +45,7 @@ export default function FacialApp() {
     setCenario(novoCenario);
     setStepIndex(0);
     setFalha(false);
+    setPerguntaSeguranca(sortearPerguntaSeguranca());
   }
 
   function avancar() {
@@ -52,7 +57,7 @@ export default function FacialApp() {
   }
 
   function responderPerguntaSeguranca(opcao: string) {
-    if (opcao === PERGUNTA_SEGURANCA.correta) {
+    if (opcao === perguntaSeguranca.correta) {
       avancar();
     } else {
       setFalha(true);
@@ -77,9 +82,9 @@ export default function FacialApp() {
       case "pergunta-seguranca":
         return (
           <PerguntaSegurancaScreen
-            pergunta={PERGUNTA_SEGURANCA.pergunta}
-            opcoes={PERGUNTA_SEGURANCA.opcoes}
-            correta={PERGUNTA_SEGURANCA.correta}
+            pergunta={perguntaSeguranca.pergunta}
+            opcoes={perguntaSeguranca.opcoes}
+            correta={perguntaSeguranca.correta}
             onResponder={responderPerguntaSeguranca}
           />
         );

@@ -69,8 +69,31 @@ export const SUCESSO_ITENS: Record<Cenario, string[]> = {
 
 export const APARTAMENTOS = ["101", "102", "103", "104"] as const;
 
-export const PERGUNTA_SEGURANCA = {
-  pergunta: "Qual é a sua data de nascimento? (Mês/Dia/Ano)",
-  opcoes: ["12/17/1998", "07/15/1995", "05/12/1980", "12/17/1988"],
-  correta: "12/17/1998",
+export type PerguntaSeguranca = {
+  pergunta: string;
+  opcoes: string[];
+  correta: string;
 };
+
+export const PERGUNTAS_SEGURANCA: PerguntaSeguranca[] = [
+  {
+    pergunta: "Em qual MÊS você nasceu?",
+    opcoes: ["Dezembro", "Julho", "Maio"],
+    correta: "Dezembro",
+  },
+  {
+    pergunta: "Em qual DIA do mês você nasceu?",
+    opcoes: ["Dia 17", "Dia 15", "Dia 12"],
+    correta: "Dia 17",
+  },
+  {
+    pergunta: "Em qual ANO você nasceu?",
+    opcoes: ["1998", "1995", "1980"],
+    correta: "1998",
+  },
+];
+
+export function sortearPerguntaSeguranca(): PerguntaSeguranca {
+  const indice = Math.floor(Math.random() * PERGUNTAS_SEGURANCA.length);
+  return PERGUNTAS_SEGURANCA[indice];
+}

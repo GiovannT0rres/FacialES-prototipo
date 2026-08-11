@@ -8,17 +8,15 @@ export default function DestinoScreen({
   onAvancar: (valor: string) => void;
 }) {
   return (
-    <div className="flex h-full w-full flex-col bg-gradient-to-b from-white via-teal-50 to-teal-200 px-5 pt-14 pb-8">
-      <div className="rounded-2xl bg-gradient-to-r from-lime-400 to-green-600 px-6 py-4 text-center text-xl font-bold text-white shadow">
-        {titulo}
-      </div>
+    <div className="flex h-full w-full flex-col gap-6 bg-neutral-100 px-6 pt-16 pb-10">
+      <h1 className="text-2xl font-bold text-neutral-800">{titulo}</h1>
 
-      <div className="mt-6 flex flex-1 flex-col items-center justify-center gap-3 rounded-2xl bg-white p-4 shadow">
+      <div className="flex flex-col gap-3">
         {opcoes.map((opcao) => (
           <button
             key={opcao}
             onClick={() => onAvancar(opcao)}
-            className="w-full rounded-xl border border-neutral-200 bg-neutral-100 py-4 text-center text-lg font-bold text-neutral-800 transition hover:border-blue-500 hover:bg-blue-50 hover:text-blue-700 active:scale-[0.98]"
+            className="w-full rounded-2xl bg-white px-5 py-5 text-left text-lg font-bold text-neutral-900 shadow-sm active:scale-[0.98]"
           >
             {opcao}
           </button>

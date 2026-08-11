@@ -6,7 +6,6 @@ import PhoneShell from "../facial/components/PhoneShell";
 import BoardingPassScreen from "../ativacao-proprietario/components/screens/BoardingPassScreen";
 import SucessoAtivacaoScreen from "../ativacao-proprietario/components/screens/SucessoAtivacaoScreen";
 import PainelOperadorScreen from "./components/screens/PainelOperadorScreen";
-import { PEDIDO_MOCK } from "./lib/types";
 
 export default function AutorizacaoFamiliarApp() {
   const [ativado, setAtivado] = useState(false);
@@ -24,7 +23,6 @@ export default function AutorizacaoFamiliarApp() {
       {ativado && (
         <PhoneShell>
           <BoardingPassScreen
-            nome={PEDIDO_MOCK.nome}
             mensagem={
               "Autorização de acesso concedida! ✅\n\n" +
               "Acesso liberado por RECONHECIMENTO FACIAL\n" +
