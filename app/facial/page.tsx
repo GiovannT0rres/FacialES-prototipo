@@ -11,6 +11,7 @@ import DestinoScreen from "./components/screens/DestinoScreen";
 import SucessoScreen from "./components/screens/SucessoScreen";
 import ChamandoScreen from "./components/screens/ChamandoScreen";
 import WhatsappProprietarioScreen from "./components/screens/WhatsappProprietarioScreen";
+import WhatsappVisitanteScreen from "./components/screens/WhatsappVisitanteScreen";
 import AcessoNegadoScreen from "./components/screens/AcessoNegadoScreen";
 import {
   APARTAMENTOS,
@@ -117,12 +118,12 @@ export default function FacialApp() {
         return (
           <div
             onClick={reiniciar}
-            className="flex h-full w-full flex-col items-center justify-center gap-4 bg-gradient-to-b from-white via-teal-50 to-teal-200 px-6 text-center"
+            className="flex h-full w-full flex-col items-center justify-center gap-4 bg-[#0B0E11] px-6 text-center"
           >
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl text-emerald-600">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#16C784] text-3xl text-white shadow-[0_0_24px_-4px_rgba(22,199,132,0.7)]">
               ✓
             </div>
-            <p className="text-lg font-bold text-neutral-700">
+            <p className="text-lg font-bold text-white">
               Acesso concluído.
               <br />
               Toque para reiniciar.
@@ -143,6 +144,12 @@ export default function FacialApp() {
         screen === "aviso-entrada-proprietario")) ||
       (!cenarioTemWhatsapp && screen === "aviso-entrada-proprietario"));
 
+  const cenarioPrimeiroCadastro = cenario === "sem-cadastro-sem-autorizacao";
+  const mostrarWhatsappVisitante =
+    !falha &&
+    cenarioPrimeiroCadastro &&
+    (screen === "sucesso" || screen === "aviso-entrada-proprietario");
+
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center gap-6 bg-slate-200 p-4">
       <PhoneShell>{renderTotem()}</PhoneShell>
@@ -155,6 +162,12 @@ export default function FacialApp() {
             onAutorizar={avancar}
             onNegar={() => setFalha(true)}
           />
+        </PhoneShell>
+      )}
+
+      {mostrarWhatsappVisitante && (
+        <PhoneShell>
+          <WhatsappVisitanteScreen />
         </PhoneShell>
       )}
 

@@ -15,7 +15,7 @@ export default function SplashScreen({
       <img
         src="/logo-colorido.png"
         alt="Entrada Segura — Cadastrou. Autorizou. Protegeu."
-        className="mx-auto w-48"
+        className="mx-auto w-48 brightness-0 invert"
       />
     </GradientScreen>
   );

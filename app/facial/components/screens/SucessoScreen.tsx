@@ -41,7 +41,7 @@ export default function SucessoScreen({
     >
       <GradientScreen>
         <div className="flex flex-1 flex-col items-center justify-center gap-10">
-          <div className="w-full rounded-3xl bg-gradient-to-b from-green-500 to-green-800 px-6 py-8 shadow-lg">
+          <div className="w-full rounded-3xl border border-[#16C784]/40 bg-[#16C784]/10 px-6 py-8">
             <div className="flex flex-col gap-4">
               {itens.slice(0, visiveis).map((item) => (
                 <div key={item} className="flex items-center gap-3">
@@ -52,7 +52,7 @@ export default function SucessoScreen({
             </div>
           </div>
 
-          <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-b from-green-400 to-green-700 shadow-md">
+          <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-[#16C784] shadow-[0_0_40px_-8px_rgba(22,199,132,0.8)]">
             {portaAberta ? (
               <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
                 <rect x="10" y="6" width="26" height="44" rx="1" fill="#7c2d12" />

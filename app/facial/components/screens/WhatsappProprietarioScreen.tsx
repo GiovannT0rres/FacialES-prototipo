@@ -12,7 +12,7 @@ type EtapaAutorizacao =
 
 type EtapaAviso = "digitando-1" | "entrou";
 
-const FOTO_VISITANTE = "https://i.pravatar.cc/400?img=51";
+const FOTO_VISITANTE = "https://i.pravatar.cc/400?img=12";
 
 const AVATAR = (
   <div className="flex h-full w-full items-center justify-center bg-[#0a2540]">
