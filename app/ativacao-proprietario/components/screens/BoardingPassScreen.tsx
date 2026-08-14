@@ -1,11 +1,13 @@
 import { PEDIDO_MOCK } from "../../lib/types";
 
 const AVATAR = (
-  <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-emerald-400 to-emerald-600">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="8" r="4" fill="white" />
-      <path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="white" />
-    </svg>
+  <div className="flex h-full w-full items-center justify-center bg-[#0a2540]">
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img
+      src="/logo-entrada-segura.jpg"
+      alt="Entrada Segura"
+      className="h-full w-full object-cover"
+    />
   </div>
 );
 
@@ -22,10 +24,8 @@ const MENSAGEM_PADRAO =
   "🖥 SISTEMA: https:/exemplo.entradasegura.com.br";
 
 export default function BoardingPassScreen({
-  nome = PEDIDO_MOCK.nome,
   mensagem = MENSAGEM_PADRAO,
 }: {
-  nome?: string;
   mensagem?: string;
 }) {
   const hora = horaAtual();
@@ -35,7 +35,7 @@ export default function BoardingPassScreen({
       <div className="flex items-center gap-3 bg-[#075e54] px-4 py-4 shadow">
         <div className="h-10 w-10 overflow-hidden rounded-full">{AVATAR}</div>
         <div className="flex flex-col">
-          <span className="text-sm font-bold text-white">{nome}</span>
+          <span className="text-sm font-bold text-white">Entrada Segura</span>
           <span className="text-xs text-emerald-100">online</span>
         </div>
       </div>

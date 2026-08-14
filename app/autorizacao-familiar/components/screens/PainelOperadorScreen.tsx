@@ -2,12 +2,8 @@ import { useState } from "react";
 import { MOTIVOS, PEDIDO_MOCK, type Motivo } from "../../lib/types";
 
 const AVATAR = (
-  <div className="flex h-full w-full items-center justify-center bg-gradient-to-b from-emerald-400 to-emerald-600">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="8" r="4" fill="white" />
-      <path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="white" />
-    </svg>
-  </div>
+  // eslint-disable-next-line @next/next/no-img-element
+  <img src={PEDIDO_MOCK.foto} alt={PEDIDO_MOCK.nome} className="h-full w-full object-cover" />
 );
 
 const LINKS_MENU = ["Acessos", "Avaliação", "Cadastro"];

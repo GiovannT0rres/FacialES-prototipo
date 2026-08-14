@@ -6,8 +6,8 @@ export default function GradientScreen({
   tone?: "teal" | "red";
 }) {
   const tones = {
-    teal: "from-white via-teal-50 to-teal-200",
-    red: "from-red-200 via-red-400 to-red-600",
+    teal: "from-[#0B0E11] via-[#0B0E11] to-[#101722]",
+    red: "from-[#2B0B10] via-[#3A0D14] to-[#0B0E11]",
   };
 
   return (
